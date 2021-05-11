@@ -5,21 +5,14 @@
 using namespace std;
 
 string token;
-double num = 1;
+string num ;
 int len = 0;
 
 bool isnum(char s) {
-	stringstream sin(s);
-	double t;
-	char p;
-	if (!(sin >> t)) {
-		return false;
+	if (isdigit(s) != 0) {
+		return true;
 	}
-	if (sin >> p) {
-		return false;
-	}
-	num = t;
-	return true;
+	else return false;
 }
 
 int scanner(int i, string s) {
@@ -27,6 +20,7 @@ int scanner(int i, string s) {
 	int index = i;
 	len = 0;
 	token = "";
+	num = "";
 	if (s[index] - 'a' >= 0 && s[index] - 'a' <= 25) {
 		while (index < s.size() && s[index] - 'a' >= 0 && s[index] - 'a' <= 25) {
 			if (s[index] == ' ') break;
@@ -43,129 +37,90 @@ int scanner(int i, string s) {
 		else return 10;
 	}
 	if (s[index] == ' ') { 
-		cout << "space" << endl;
+		//cout << "space" << endl;
 		len ++;
 		return -12;
 	}
-	/*if (s[i] == 'b') {
-		if (s[i + 1] == 'e' && s[i + 2] == 'g' && s[i + 3] == 'i' && s[i + 4] == 'n' && (s[i + 5] - 'a' < 0 && s[i + 5] - 'a'  >25 )) {
-			res = 1;
-			//token = "begin";
-		}
-		else {
-			res = 10;
-			token += s[i];
-		}
-
-	}
-	else if (s[i] == 'i') {
-		if (s[i + 1] == 'f' &&(s[i + 2] - 'a' < 0 && s[i + 2] - 'a' > 25)) {
-			
-			res = 2;
-			//token = "if";
-		}
-		else {
-			res = 10;
-			token += s[i];
-		}
-	}
-	else if (s[i] == 't') {
-		if (s[i + 1] == 'h' && s[i + 2] == 'e' && s[i + 3] == 'n' && (s[i + 4] - 'a' < 0 && s[i + 4] - 'a' > 25)) {
-			res = 3;
-			//token = "then";
-		}
-		else {
-			res = 10;
-			token = s[i];
-		}
-	}
-	else if (s[i] == 'w') {
-		if (s[i + 1] == 'h' && s[i + 2] == 'i' && s[i + 3] == 'l' && s[i + 4] == 'e' && (s[i + 5] - 'a' < 0 && s[i + 5] - 'a' > 25)) {
-			res = 4;
-			//token = "while";
-		}
-		else {
-			res = 10;
-			token = s[i];
-		}
-	}
-	else if (s[i] == 'd') {
-		if (s[i + 1] == 'o' && (s[i + 2] - 'a' < 0 && s[i + 2] - 'a' > 25)) {
-			res = 5;
-			//token = "do";
-		}
-		else {
-			res = 10;
-			token = s[i];
-		}
-	}
-	else if (s[i] == 'e') {
-		if (s[i + 1] == 'n' && s[i + 2] == 'd' && (s[i + 3] - 'a' < 0 && s[i + 3] - 'a' > 25)) {
-			res = 6;
-			//token = "end";
-		}
-		else {
-			res = 10;
-			token = s[i];
-		}
-	}
-	else if (s[i] == '+') {
+	else if (s[index] == '+') {
 		res = 13;
+		len ++;
 	}
-	else if (s[i] == '-') {
+	else if (s[index] == '-') {
 		res = 14;
+		len ++;
 	}
-	else if (s[i] == '*') {
+	else if (s[index] == '*') {
 		res = 15;
+		len ++;
 	}
-	else if (s[i] == '/') {
+	else if (s[index] == '/') {
 		res = 16;
+		len ++;
 	}
-	else if (s[i] == ':') {
-		if (s[i + 1] == '=')
+	else if (s[index] == ':') {
+		if (s[index + 1] == '=') {
 			res = 18;
-		else
+			len += 2;
+		}
+		else {
 			res = 17;
+			len ++;
+		}
+
 
 	}
-	
-	else if (s[i] == '<') {
-		if (s[i + 1] == '>')
+	else if (s[index] == '<') {
+		if (s[index + 1] == '>') {
 			res = 21;
-		else if (s[i + 1] == '=')
+			len += 2;
+		}
+		else if (s[index + 1] == '=') {
 			res = 22;
-		else
+			len += 2;
+		}
+		else {
 			res = 20;
+			len++;
+		}
 	}
-	else if (s[i] == '>') {
-		if (s[i + 1] == '=')
+	else if (s[index] == '>') {
+		if (s[index + 1] == '=') {
 			res = 24;
-		else 
+			len += 2;
+		}
+		else {
 			res = 23;
+			len ++;
+		}
 	}
-	else if (s[i] == '=') {
+	else if (s[index] == '=') {
 		res = 25;
+		len ++;
 	}
-	else if (s[i] == ';') {
+	else if (s[index] == ';') {
 		res = 26;
+		len ++;
 	}
-	else if (s[i] == '(') {
+	else if (s[index] == '(') {
 		res = 27;
+		len ++;
 	}
-	else if (s[i] == ')') {
+	else if (s[index] == ')') {
 		res = 28;
+		len ++;
 	}
-	else if (s[i] == '#') {
+	else if (s[index] == '#') {
 		res = 0;
 	}
-	else if (isnum(s[i])) {
-		res = 11; 
+	else if (isnum(s[index])) {
+		while (isnum(s[index])) {
+			len ++;
+			num += s[index];
+			index++;
+
+		}
+		res = 11;
 	}
-	else {
-		res = 10;
-		token = s[i];
-	}*/
-	//cout << res << endl;
 	return res;
 }
 
@@ -174,25 +129,17 @@ int main() {
 
 	int i = 0;
 
-	cout << "ÇëÊäÈë£º" << endl;
-	/*vector<char> str;
-	char ch;
-	cout << "ÇëÊäÈë£º" << endl;
-	while (cin >> ch) {
-		str.push_back(ch);
-		if (ch == '#')
-			break;
-	}*/
+	cout << "è¯·è¾“å…¥ï¼š" << endl;
 	string str;
 
 	getline(cin, str);
 
-	cout << str << endl;
+	//cout << str << endl;
 
 	int syn;
 	int index = 0;
 	cout << endl;
-	cout << "´Ê·¨·ÖÎö½á¹û£º"<<endl;
+	cout << "è¯æ³•åˆ†æžç»“æžœï¼š"<<endl;
 	do {
 		syn = scanner(index, str);
 		//cout << "syn:" << syn << endl;
@@ -275,28 +222,7 @@ int main() {
 		default:
 			break;
 		}
-		/*if (syn == 1 || syn == 4) {
-			index += 5;
-		}
-		else if (syn == 2 || syn == 5 || syn == 21 || syn == 24 || syn == 18 || syn == 22 || syn == 24) {
-			index += 2;
-		}
-		else if (syn == 3) {
-			index += 4;
-		}
-		else if (syn == 6) {
-			index += 3;
-		}
-		else {
-			index++;
-		}*/
 		index += len;
-		cout << "index:" << index << endl;
 	} while (syn != 0);
-	cout << endl;
-	cout << "×î³õµÄÊäÈë:" << endl;
-	for (int i = 0; i < str.size(); i ++)
-		//cout<<str[i];
-	cout << endl;
 	return 0;
 }
